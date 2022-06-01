@@ -1,0 +1,299 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Desafio Documentation",
+    "description": "This is an API rent",
+    "version": "1.0.0",
+    "contact" : {
+      "email": "dev.douggo@gmail.com"
+    }
+  },
+  "paths": {
+    "/users" : {
+      "post" : {
+        "tags" : ["User"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type" : "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Doug",
+                  "email": "dev.douggo@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      },
+                      "updated_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "id": "d4cba89d-4a3f-4cdc-94c7-380e314463fc",
+                  "name": "Doug",
+                  "admin": false,
+                  "email": "dev.douggo@gmail.com",
+                  "created_at": "2022-06-02T10:50:32.190Z",
+                  "updated_at": "2022-06-02T14:50:32.190Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This e-mail have been already taken. Try another else."
+          }
+        }
+      },
+      "get" : {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "User's ID (UUID-4) that's requesting. The user must be an Admin to actually return the list.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      },
+                      "updated_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "ca2cf35b-b1ce-4bdb-9503-7fd2a7173d97",
+                    "name": "FooBar",
+                    "admin": false,
+                    "email": "foo.bar@gmail.com",
+                    "created_at": "2022-06-01T14:50:11.679Z",
+                    "updated_at": "2022-06-01T14:50:11.679Z"
+                  },
+                  {
+                    "id": "d4cba89d-4a3f-4cdc-94c7-380e314463fc",
+                    "name": "Doug",
+                    "admin": true,
+                    "email": "dev.douggo@gmail.com",
+                    "created_at": "2022-06-02T10:50:32.190Z",
+                    "updated_at": "2022-06-02T14:50:32.190Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "User not found! || User is not an Admin!"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User Profile"],
+        "summary": "Show user's information.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User's ID (UUID-4)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      },
+                      "updated_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "id": "d4cba89d-4a3f-4cdc-94c7-380e314463fc",
+                  "name": "Doug",
+                  "admin": false,
+                  "email": "dev.douggo@gmail.com",
+                  "created_at": "2022-06-02T10:50:32.190Z",
+                  "updated_at": "2022-06-02T14:50:32.190Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User doesn't exists!"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Turn a user an admin",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User's ID (UUID-4)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      },
+                      "updated_at": {
+                        "type": "Date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "2022-06-01"
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "id": "d4cba89d-4a3f-4cdc-94c7-380e314463fc",
+                  "name": "Doug",
+                  "admin": true,
+                  "email": "dev.douggo@gmail.com",
+                  "created_at": "2022-06-02T10:50:32.190Z",
+                  "updated_at": "2022-06-02T14:50:32.190Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found!"
+          }
+        }
+      }
+    }
+  }
+}
